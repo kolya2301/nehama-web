@@ -1,0 +1,100 @@
+{
+  "nav": {
+    "catalog": "Product Catalog",
+    "services": "Services",
+    "about": "About",
+    "contact": "Contact",
+    "companies": "Our Clients"
+  },
+  "hero": {
+    "badge": "Israeli Manufacturing Since 2006 · Ashkelon",
+    "title_1": "Support accessories",
+    "title_2": "that fit the person,",
+    "title_3": "not the other way around",
+    "desc": "We manufacture disability support accessories with full custom fitting. Twenty years of experience, direct service from the owners, quality built one item at a time.",
+    "cta_catalog": "View Product Catalog",
+    "cta_contact": "Contact Us Now",
+    "stat_years": "years of manufacturing experience",
+    "stat_local": "Local production in Ashkelon",
+    "stat_custom": "For any size and need",
+    "stat_service": "Speak directly with the owners"
+  },
+  "trust": {
+    "factory_title": "Factory in Ashkelon",
+    "factory_desc": "Local manufacturing, delivery nationwide",
+    "years_title": "Active Since 2006",
+    "years_desc": "20 years of experience and reliability",
+    "personal_title": "Personal Service",
+    "personal_desc": "Directly with the owners — no middlemen",
+    "custom_title": "Full Customization",
+    "custom_desc": "We manufacture to your measurements and needs"
+  },
+  "categories": {
+    "section_label": "Product Catalog",
+    "section_title": "What We Manufacture",
+    "section_desc": "A wide range of support accessories, manufactured in Israel to our high standards",
+    "view": "View →",
+    "details": "Details →",
+    "wheelchair_name": "Wheelchair Accessories",
+    "wheelchair_desc": "Add-ons and accessories for improved comfort and function",
+    "toilet_name": "Toilet Chairs",
+    "toilet_desc": "Chairs adapted for safe and comfortable use",
+    "bed_name": "Bed Accessories",
+    "bed_desc": "Padding, side guards, and sleep supports",
+    "inserts_name": "Inserts",
+    "inserts_desc": "Internal supports and seating additions",
+    "upholstery_name": "Wheelchair Upholstery",
+    "upholstery_desc": "Professional upholstery for maximum long-term comfort",
+    "cushions_name": "Pressure Ulcer Cushions",
+    "cushions_desc": "Specialized cushions for pressure distribution and ulcer prevention",
+    "custom_name": "Custom Products",
+    "custom_desc": "We manufacture to your specific measurements, materials, and needs. Ideal for institutions, hospitals, and treating physicians."
+  },
+  "about": {
+    "badge": "Our Story",
+    "title": "A family business built on trust and quality",
+    "p1": "Nachama and Roman founded the factory in 2006, recognizing that the market lacked local, flexible, and reliable manufacturing solutions for people with special needs.",
+    "p2": "Twenty years later, we still speak directly with every client, still manufacture every product ourselves, and still feel personal responsibility for every item that leaves the factory.",
+    "stat_years": "years of operation",
+    "stat_categories": "product categories",
+    "stat_made": "Israeli made",
+    "photo_placeholder": "Team / factory photo"
+  },
+  "steps": {
+    "section_label": "How It Works",
+    "section_title": "From need to solution — three steps",
+    "section_desc": "A simple, human, and clear process from start to finish",
+    "step1_title": "Get in touch",
+    "step1_desc": "Call, send a WhatsApp, or fill in the form. Someone from the team responds personally within one business day.",
+    "step2_title": "We figure it out together",
+    "step2_desc": "We discuss your needs, measurements, and product type. If needed, we send a sketch or schedule a meeting.",
+    "step3_title": "You receive the product",
+    "step3_desc": "We manufacture to the agreement and ship nationwide. We stand behind every product that leaves our factory."
+  },
+  "contact": {
+    "title": "Speak with us directly",
+    "desc": "No call center, no waiting. Talk to the owners and get a real answer.",
+    "call": "Call",
+    "whatsapp": "WhatsApp",
+    "form_title": "Send us a message",
+    "name_label": "Full name",
+    "name_placeholder": "Your Name",
+    "phone_label": "Phone",
+    "phone_placeholder": "050-000-0000",
+    "message_label": "What's it about?",
+    "message_placeholder": "Tell us briefly what you're looking for...",
+    "submit": "Send message",
+    "submit_success": "Message sent! We'll be in touch shortly."
+  },
+  "footer": {
+    "desc": "Israeli manufacturer of disability support accessories since 2006. Ashkelon, Israel.",
+    "nav_title": "Navigation",
+    "info_title": "Information",
+    "accessibility": "Accessibility Statement",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "nii_info": "National Insurance Info",
+    "copyright": "© 2006–2026 Nehama Support Accessories Manufacturing. All rights reserved.",
+    "a11y_badge": "Accessible Site · WCAG 2.1 AA"
+  }
+}
