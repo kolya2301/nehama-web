@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
@@ -137,6 +139,3 @@ export default async function CatalogPage({ params }: Props) {
   );
 }
 
-export async function generateStaticParams() {
-  return VALID_SLUGS.map((slug) => ({ slug }));
-}
