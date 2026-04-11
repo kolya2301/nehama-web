@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "pages:build": "npx @cloudflare/next-on-pages",
+    "pages:deploy": "npm run pages:build && wrangler pages deploy",
+    "pages:preview": "npm run pages:build && wrangler pages dev"
   },
   "dependencies": {
     "next": "15.5.2",

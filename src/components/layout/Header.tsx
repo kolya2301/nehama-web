@@ -2,7 +2,7 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname } from "../../../i18n/navigation";
-import { Logo } from "./Logo";
+import Image from "next/image";
 import { routing } from "../../../i18n/routing";
 import { useRouter } from "../../../i18n/navigation";
 
@@ -29,13 +29,13 @@ export function Header() {
         <nav className="flex items-center justify-between h-[72px]">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
-            <Logo size={44} />
+            <Image src="/logo.jpeg" alt="נחמה לוגו" width={44} height={44} className="rounded-lg object-contain" />
             <div className="flex flex-col leading-tight">
               <span className="text-[22px] font-extrabold text-[#1B4F72] tracking-tight">
                 נחמה
               </span>
               <span className="text-[11px] font-medium text-gray-400">
-                ייצור אביזרי תמיכה לנכים
+                ייצור אביזרי תמיכה אורתופדיים ועזרים שיקומיים
               </span>
             </div>
           </Link>
@@ -96,6 +96,24 @@ export function Header() {
             </li>
           </ul>
         </nav>
+
+        {/* Mobile locale switcher */}
+        <div className="flex md:hidden items-center gap-1 pb-2 border-t border-gray-100 pt-2">
+          {routing.locales.map((l) => (
+            <button
+              key={l}
+              onClick={() => switchLocale(l)}
+              className={`px-3 py-1.5 text-[13px] font-bold rounded-md transition-colors ${
+                l === locale
+                  ? "bg-[#1B4F72] text-white"
+                  : "text-gray-500 hover:bg-gray-50"
+              }`}
+              aria-label={`Switch to ${l}`}
+            >
+              {LOCALE_LABELS[l]}
+            </button>
+          ))}
+        </div>
       </div>
     </header>
   );
