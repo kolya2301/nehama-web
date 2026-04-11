@@ -33,8 +33,9 @@ export async function POST(req: NextRequest) {
     };
 
     // Send email via Resend
+    // "from" uses Resend shared domain until nehama2006.com is verified in Resend
     const emailResult = await resend.emails.send({
-      from: "leads@nehama2006.com",
+      from: "Nehama Website <onboarding@resend.dev>",
       to: process.env.NEHAMA_EMAILS || "nehama2006@gmail.com",
       subject: `🔔 פנייה חדשה מ-${safeName}`,
       html: `
