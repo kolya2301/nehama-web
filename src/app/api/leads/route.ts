@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getRequestContext } from "@cloudflare/next-on-pages";
 
 export const runtime = "edge";
 
@@ -18,11 +19,12 @@ export async function POST(req: NextRequest) {
       ? source
       : "unknown";
 
-    const apiKey = process.env.RESEND_API_KEY;
-    const toEmail = process.env.NEHAMA_EMAILS || "nehama2006@gmail.com";
+    // Read env vars via Cloudflare context (works for Secrets too)
+    const env = getRequestContext().env as Record<string, string | undefined>;
+    const apiKey = env.RESEND_API_KEY ?? process.env.RESEND_API_KEY;
+    const toEmail = env.NEHAMA_EMAILS ?? process.env.NEHAMA_EMAILS ?? "kolya95@gmail.com";
 
-    console.log("Lead received:", { name: safeName, phone: safePhone, source: safeSource });
-    console.log("API key present:", !!apiKey, "| to:", toEmail);
+    console.log("Lead:", safeName, safePhone, "| key:", !!apiKey, "| to:", toEmail);
 
     if (apiKey) {
       try {
@@ -47,16 +49,15 @@ export async function POST(req: NextRequest) {
           }),
         });
         const data = await res.json() as Record<string, unknown>;
-        console.log("Resend response:", res.status, JSON.stringify(data));
-      } catch (emailErr) {
-        console.error("Resend fetch error:", emailErr);
+        console.log("Resend:", res.status, JSON.stringify(data));
+      } catch (e) {
+        console.error("Resend error:", e);
       }
     }
 
-    // Always return 200 so the form shows success
     return NextResponse.json({ ok: true });
   } catch (error) {
-    console.error("API parse error:", error);
+    console.error("API error:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
