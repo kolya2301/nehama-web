@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
+import { Resend } from "resend";
 
 export const runtime = "edge";
 
 export async function POST(req: NextRequest) {
   try {
+    // Initialize Resend at runtime (not build-time)
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
     const body = await req.json();
     const { name, phone, message, source } = body;
 
@@ -20,16 +24,42 @@ export async function POST(req: NextRequest) {
       ? source
       : "unknown";
 
-    // TODO Phase 1: store in DB (Neon Postgres via Cloudflare Hyperdrive)
-    // For now: send email notification via Resend
-    const lead = { name: safeName, phone: safePhone, message: safeMessage, source: safeSource, ts: new Date().toISOString() };
-    console.log("New lead:", lead);
+    const lead = {
+      name: safeName,
+      phone: safePhone,
+      message: safeMessage,
+      source: safeSource,
+      ts: new Date().toISOString(),
+    };
 
-    // TODO: replace with actual Resend email call
-    // await resend.emails.send({ from: "leads@nehama2006.com", to: ["nehama2006@gmail.com", "nehama2006r@gmail.com"], subject: `פנייה חדשה מ-${safeName}`, text: `...` })
+    // Send email via Resend
+    const emailResult = await resend.emails.send({
+      from: "leads@nehama2006.com",
+      to: process.env.NEHAMA_EMAILS || "nehama2006@gmail.com",
+      subject: `🔔 פנייה חדשה מ-${safeName}`,
+      html: `
+        <h2>פנייה חדשה דרך האתר</h2>
+        <p><strong>שם:</strong> ${safeName}</p>
+        <p><strong>טלפון:</strong> ${safePhone}</p>
+        <p><strong>מקור:</strong> ${safeSource}</p>
+        <p><strong>הודעה:</strong></p>
+        <p>${safeMessage}</p>
+        <p><small>שעה: ${lead.ts}</small></p>
+      `,
+    });
 
-    return NextResponse.json({ ok: true });
-  } catch {
+    if (emailResult.error) {
+      console.error("Resend error:", emailResult.error);
+      return NextResponse.json(
+        { error: "Failed to send email" },
+        { status: 500 }
+      );
+    }
+
+    console.log("Lead received and email sent:", lead);
+    return NextResponse.json({ ok: true, id: emailResult.data?.id });
+  } catch (error) {
+    console.error("API error:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
