@@ -19,6 +19,12 @@ export async function POST(req: NextRequest) {
       ? source
       : "unknown";
 
+    // Server-side phone validation — Israeli numbers only
+    const phoneDigits = safePhone.replace(/\D/g, "");
+    if (phoneDigits.length < 9 || phoneDigits.length > 10 || !phoneDigits.startsWith("0")) {
+      return NextResponse.json({ error: "Invalid phone number" }, { status: 400 });
+    }
+
     // Read env vars via Cloudflare context (works for Secrets too)
     const env = getRequestContext().env as Record<string, string | undefined>;
     const apiKey = env.RESEND_API_KEY ?? process.env.RESEND_API_KEY;

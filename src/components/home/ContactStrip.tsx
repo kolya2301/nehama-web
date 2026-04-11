@@ -8,13 +8,37 @@ const FOUNDERS = [
   { initial: "ר", name: "רומן", phone: "054-571-4031", wa: "972545714031" },
 ];
 
+// Israeli phone: 05X-XXX-XXXX or 0X-XXXXXXX
+const PHONE_RE = /^0[2-9][0-9\-\s]{6,10}$/;
+
+function formatPhone(raw: string): string {
+  const digits = raw.replace(/\D/g, "");
+  if (digits.length <= 3) return digits;
+  if (digits.length <= 7) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+  return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+}
+
 export function ContactStrip() {
   const t = useTranslations("contact");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [phoneVal, setPhoneVal] = useState("");
+  const [phoneError, setPhoneError] = useState(false);
+
+  function handlePhoneChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const formatted = formatPhone(e.target.value);
+    setPhoneVal(formatted);
+    setPhoneError(false);
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (!PHONE_RE.test(phoneVal.replace(/\s/g, ""))) {
+      setPhoneError(true);
+      return;
+    }
+
     setLoading(true);
     const form = e.currentTarget;
     const data = new FormData(form);
@@ -24,13 +48,14 @@ export function ContactStrip() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: data.get("name"),
-          phone: data.get("phone"),
+          phone: phoneVal,
           message: data.get("message"),
           source: "homepage",
         }),
       });
       setSubmitted(true);
       form.reset();
+      setPhoneVal("");
     } finally {
       setLoading(false);
     }
@@ -112,10 +137,21 @@ export function ContactStrip() {
                     name="phone"
                     required
                     type="tel"
-                    placeholder={t("phone_placeholder")}
+                    inputMode="numeric"
+                    placeholder="050-000-0000"
                     dir="ltr"
-                    className="w-full px-3.5 py-3 border-[1.5px] border-gray-200 rounded-lg text-[15px] bg-[#F8F7F4] focus:border-[#1B4F72] focus:bg-white outline-none transition-colors text-end"
+                    value={phoneVal}
+                    onChange={handlePhoneChange}
+                    maxLength={12}
+                    className={`w-full px-3.5 py-3 border-[1.5px] rounded-lg text-[15px] bg-[#F8F7F4] outline-none transition-colors text-end ${
+                      phoneError
+                        ? "border-red-400 focus:border-red-500"
+                        : "border-gray-200 focus:border-[#1B4F72] focus:bg-white"
+                    }`}
                   />
+                  {phoneError && (
+                    <p className="text-red-500 text-[12px] mt-1">יש להזין מספר טלפון ישראלי תקין (לדוגמה: 050-000-0000)</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-[14px] font-semibold text-gray-700 mb-1.5">
