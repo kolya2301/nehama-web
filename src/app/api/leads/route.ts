@@ -47,7 +47,11 @@ export async function POST(req: NextRequest) {
 
     // In Cloudflare Pages with next-on-pages, Secrets are in process.env at runtime
     const apiKey = process.env.RESEND_API_KEY;
-    const toEmail = process.env.NEHAMA_EMAILS ?? "kolya95@gmail.com";
+    // Parse comma-separated emails into array, fallback to registered Resend email
+    const rawTo = process.env.NEHAMA_EMAILS ?? "";
+    const toEmail: string | string[] = rawTo.includes(",")
+      ? rawTo.split(",").map((e) => e.trim()).filter(Boolean)
+      : rawTo.trim() || "kolya95@gmail.com";
 
     console.log("Lead:", safeName, safePhone, "key:", apiKey ? apiKey.slice(0, 8) + "..." : "MISSING", "to:", toEmail);
 
